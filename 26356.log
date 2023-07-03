@@ -1,0 +1,33 @@
+[ERROR Jul  3 18:38:53.634374200, defaults.go:139] Could not load configuration: Failed to load configuration.
+
+Stacktrace: D:/a/cli/cli/internal/logging/logging.go:github.com/ActiveState/cli/internal/logging.Error:258
+D:/a/cli/cli/internal/logging/defaults.go:github.com/ActiveState/cli/internal/logging.init.0:139
+C:/hostedtoolcache/windows/go/1.15.8/x64/src/runtime/proc.go:runtime.doInit:5652
+C:/hostedtoolcache/windows/go/1.15.8/x64/src/runtime/proc.go:runtime.doInit:5647
+C:/hostedtoolcache/windows/go/1.15.8/x64/src/runtime/proc.go:runtime.doInit:5647
+C:/hostedtoolcache/windows/go/1.15.8/x64/src/runtime/proc.go:runtime.main:191
+C:/hostedtoolcache/windows/go/1.15.8/x64/src/runtime/asm_amd64.s:runtime.goexit:1374
+
+[DEBUG Jul  3 18:38:53.637362300, locale.go:34] Init
+[DEBUG Jul  3 18:38:53.701936900, secrets.go:35] Gcloud Secretmanager failed to initialize (ignore if you're not trying to use gcloud): google: could not find default credentials. See https://developers.google.com/accounts/docs/application-default-credentials for more information.
+[DEBUG Jul  3 18:38:53.709224400, output.go:52] Requested outputer for editor
+[DEBUG Jul  3 18:38:53.709224400, output.go:69] Using Editor outputer
+[DEBUG Jul  3 18:38:53.709224400, main.go:110] ConfigPath: C:\Users\Tanner\AppData\Roaming\activestate\cli-release
+[DEBUG Jul  3 18:38:53.709224400, main.go:111] CachePath: C:\Users\Tanner\AppData\Local\activestate
+[DEBUG Jul  3 18:38:53.710323300, subshell.go:87] Detected SHELL: C:\WINDOWS\system32\cmd.exe
+[DEBUG Jul  3 18:38:53.710323300, subshell.go:122] Using binary: C:\WINDOWS\system32\cmd.exe
+[DEBUG Jul  3 18:38:53.710872300, secrets.go:61] secrets-api scheme=https host=platform.activestate.com base_path=/api/secrets/v1
+[DEBUG Jul  3 18:38:53.711922600, secrets.go:61] secrets-api scheme=https host=platform.activestate.com base_path=/api/secrets/v1
+[DEBUG Jul  3 18:38:53.713990000, check.go:69] Checking for updates.
+[DEBUG Jul  3 18:38:53.713990000, updater.go:270] Fetching update URL: https://state-tool.s3.amazonaws.com/update/state/release/windows-amd64.json
+[DEBUG Jul  3 18:38:54.512500300, check.go:96] Self-updating.
+[DEBUG Jul  3 18:38:54.512500300, updater.go:183] Attempting to open lock file at C:\Users\Tanner\AppData\Roaming\ActiveState\bin\.state.update-lock
+[DEBUG Jul  3 18:38:54.513980500, updater.go:202] Attempting to open executable path at: C:\Users\Tanner\AppData\Roaming\ActiveState\bin\state.exe
+[WARNING Jul  3 18:38:54.515025400, json.go:85] JSON outputer truncated the following notice: Updating state tool:  Downloading latest version of the state tool...
+
+[WARNING Jul  3 18:38:54.515025400, json.go:85] JSON outputer truncated the following notice: To avoid auto updating run [ACTIONABLE]state update --lock[/RESET] (only recommended for production environments) or set environment variable [ACTIONABLE]ACTIVESTATE_CLI_DISABLE_UPDATES=true[/RESET]
+[DEBUG Jul  3 18:38:54.515025400, updater.go:324] Starting to fetch full binary from: https://state-tool.s3.amazonaws.com/update/state/release/0.29.5-SHAc987c32/windows-amd64.zip
+[WARNING Jul  3 18:39:26.837449600, json.go:85] JSON outputer truncated the following notice: Updated from [NOTICE]0.25.1-SHAd98b4c4[/RESET] to [NOTICE]0.29.5-SHAc987c32[/RESET].
+
+[DEBUG Jul  3 18:39:26.837449600, autoupdate.go:48] Running command: C:\Users\Tanner\AppData\Roaming\ActiveState\bin\state.exe show --output editor
+[DEBUG Jul  3 18:39:39.671050300, updater.go:389] Could not remove old file: remove C:\Users\Tanner\AppData\Roaming\ActiveState\bin\.state.old: Access is denied.
