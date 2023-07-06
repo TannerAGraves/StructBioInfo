@@ -1,4 +1,6 @@
-# Classification of Contacts in Protein Structures
+
+<h1 align="center"> Classification of Contacts in Protein Structures</h1>
+
 
 <p align="center">
 <b>Structural Bioinformatics Project, Data Science @ UniPD, A.Y. 2022/23. </b>
