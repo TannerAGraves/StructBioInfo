@@ -1,8 +1,12 @@
-# Classification of Contacts in Protein Structures
+## Classification of Residue-Residue Contacts in Protein Structures with Deep Neural Networks
 
-Structural Bioinformatics Project, Data Science @ UniPD, A.Y. 2022/23. Classification of Contacts in Protein Structures with Deep Neural Networks.
+<p align="center">
+<b>Structural Bioinformatics Project, Data Science @ UniPD, A.Y. 2022/23. </b>
+</p>
 
-__Authors__: Tanner Graves, Marco Uderzo, Nour Alhousseini, Hazeezat Adebimpe Adebayo.
+<p align="center">
+<b> Authors: </b>Tanner Graves, Marco Uderzo, Nour Alhousseini, Hazeezat Adebimpe Adebayo.
+</p>
 
  <p align="center">
   <img width="500" alt="image" src="assets/protein_img.png">
