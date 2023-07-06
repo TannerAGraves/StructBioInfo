@@ -1,4 +1,4 @@
-## Classification of Residue-Residue Contacts in Protein Structures with Deep Neural Networks
+# Classification of Residue-Residue Contacts in Protein Structures
 
 <p align="center">
 <b>Structural Bioinformatics Project, Data Science @ UniPD, A.Y. 2022/23. </b>
