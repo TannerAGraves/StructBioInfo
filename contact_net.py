@@ -1,6 +1,7 @@
 import argparse, logging, os
 from Bio.PDB import PDBList
 import pandas as pd
+import model
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Argument Parser for ContactNet")
@@ -31,6 +32,10 @@ def inference(input_pdb): # this should load the model and perform inference giv
 
     X = df[['s_up', 's_down', 's_phi', 's_psi', 's_a1', 's_a2', 's_a3', 's_a4', 's_a5', 't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']]
     X = X.apply(lambda x: x.fillna(x.mean()) if x.dtype.kind in 'biufc' else x)
+    
+    minMax = MinMaxScaler()
+    minMax.fit(X)
+    X_scaled = minMax.transform(X)
 
     print(X)
 
