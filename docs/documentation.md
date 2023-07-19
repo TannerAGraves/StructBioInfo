@@ -29,7 +29,7 @@ The repository is organized as follows (only relevant files and folders mentione
 
 Before running the software, make sure all the following dependent python libraries are installed on your machine:
 
-- `Python 3.x`
+- `Python 3.x`: assuming it's already installed.
 - `biopython`
 - `numpy`
 - `pandas`
