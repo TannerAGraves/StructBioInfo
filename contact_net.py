@@ -1,7 +1,8 @@
 import argparse, logging, os
 from Bio.PDB import PDBList
 import pandas as pd
-import model
+#import model
+from sklearn.preprocessing import MinMaxScaler
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Argument Parser for ContactNet")
@@ -26,9 +27,9 @@ def inference(input_pdb): # this should load the model and perform inference giv
     pdb_list.retrieve_pdb_file(input_pdb, pdir=".")
     logging.info(f'Downloaded PDB: {input_pdb}')
     
-    os.system(f"python calc_features.py {input_pdb}.cif") 
+    os.system(f"python3 calc_features.py {input_pdb}.cif -out_dir data/output/") 
 
-    df = pd.read_csv("./" + input_pdb + ".tsv", sep='\t')
+    df = pd.read_csv("data/output/" + input_pdb + ".tsv", sep='\t')
 
     X = df[['s_up', 's_down', 's_phi', 's_psi', 's_a1', 's_a2', 's_a3', 's_a4', 's_a5', 't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']]
     X = X.apply(lambda x: x.fillna(x.mean()) if x.dtype.kind in 'biufc' else x)
