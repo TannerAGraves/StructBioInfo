@@ -29,4 +29,26 @@ Residue Interaction Networks are derived from protein structures based on geomet
 
 This project aims at predicting the RING classification of a contact based on supervised methods, rather than geometrical constraints. The software is able to calculate the propensity (or probability) of a contact belonging to each of the different contact types defined by RING, starting from the protein structure.
 
+### Repository Overview and Files
+
+The repository is organized as follows (only relevant files and folders mentioned):
+
+```
+↳ data: folder containing all data.
+        ↳ features_ring: folder containing all of the training data in .tsv format.
+                        🗎 *.tsv
+
+        🗎 atchley.tsv: utility file to compute features.
+        🗎 ramachandran.dat: utility file to compute features.
+
+↳ docs: folder containing the software documentation.
+        🗎 documentation.md: software documentation.
+
+↳ model: folder containing the trained model, loaded at inference time.
+        🗎 model.keras: keras model file.
+      
+🗎 contact_net.py: main python script. run for inference or training, specifying arguments.
+🗎 model.py: python script containing the untrained model.
+🗎 calc-features.py: python script to compute the proteins features.
+```
 
