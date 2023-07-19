@@ -1,7 +1,7 @@
 {
   "dssp_file": "bin/dssp-2.3.0/mkdssp",
-  "rama_file": "ramachandran.dat",
-  "atchley_file": "atchley.tsv",
+  "rama_file": "data/ramachandran.dat",
+  "atchley_file": "data/atchley.tsv",
   "distance_threshold": 3.5,
   "sequence_separation": 3,
   "rama_ss_ranges": [[-180, -180, 80, 60, "E", "blue"],
