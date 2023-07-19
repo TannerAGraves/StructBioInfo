@@ -36,10 +36,11 @@ Before running the software, make sure all the following dependent python librar
 - `sklearn`
 - `imblearn`
 - `keras`
+- `tensorflow`
 
-To install all, run: `pip install biopython numpy pandas scikit-learn imbalanced-learn keras` 
+To install all, run: `pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow` 
 
-If you find python3 is not able to find the libraries, install them using the following command: `python3 -m pip install biopython numpy pandas scikit-learn imbalanced-learn keras`
+If you find python3 is not able to find the libraries, install them using the following command: `python3 -m pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow`
 
 
 
