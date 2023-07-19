@@ -30,11 +30,14 @@ The repository is organized as follows (only relevant files and folders mentione
 Before running the software, make sure all the following dependent python libraries are installed on your machine:
 
 - `Python 3.x`
-- `numpy`: run `pip install numpy`
-- `pandas`: run `pip install pandas`
-- `sklearn`: run `pip install scikit-learn`
-- `imblearn`: run `pip install imbalanced-learn`
-- `keras`: run `pip install keras`
+- `biopython`
+- `numpy`
+- `pandas`
+- `sklearn`
+- `imblearn`
+- `keras`
+
+To install all, run: `pip install biopython numpy pandas scikit-learn imbalanced-learn keras` 
 
 ## Running the Software
 
