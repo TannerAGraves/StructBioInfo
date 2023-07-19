@@ -39,6 +39,10 @@ Before running the software, make sure all the following dependent python librar
 
 To install all, run: `pip install biopython numpy pandas scikit-learn imbalanced-learn keras` 
 
+If you find python3 is not able to find the libraries, install them using the following command: `python3 -m pip install biopython numpy pandas scikit-learn imbalanced-learn keras`
+
+
+
 ## Running the Software
 
 The software allows both out-of-the-box inference by loading the trained model or complete retraining of the model.
