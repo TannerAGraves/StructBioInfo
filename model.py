@@ -12,7 +12,7 @@ from keras.utils import to_categorical
 from keras import models
 
 
-class ContactNet:
+class ContactNet: #maybe make this class a singleton pattern
 
     def __init__(self, train: bool):
         self.train = train
@@ -23,5 +23,5 @@ class ContactNet:
     def save_model(self, mdl):
         mdl.save('path/to/mdl')
     
-    def train(self):
+    def train_model(self):
         pass

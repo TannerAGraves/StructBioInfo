@@ -66,29 +66,34 @@ def perform_inference(model, input_pdb): # this should load the model and perfor
 
 
 def main():
-    
+
+    logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.WARNING)
+
     args = parse_arguments()
 
     input_pdb = args.pdb
     perform_inference = args.inference
     perform_training = args.train
 
+
     contact_net_model = ContactNet(perform_training) # perform_training: bool
+
 
     if perform_inference:
         if input_pdb == None:
-            print("No PDB_id specified!")
+            logging.warning("No PDB_id specified!")
             return
-        print("Performing inference on PDB:", input_pdb)
+        
+        logging.info("Performing inference on PDB:", input_pdb)
         perform_inference(contact_net_model, input_pdb)
         
     elif perform_training:
-        print("Performing re-training of ContactNet")
-        contact_net_model.train()
+        logging.info("Performing re-training of ContactNet")
+        contact_net_model.train_model()
        
     else:
-        print("No action specified. Use either --inference or --train.")
-
+        logging.warning("No action specified. Use either --inference or --train.")
+        return
 
 
 
