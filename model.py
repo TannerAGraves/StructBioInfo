@@ -9,3 +9,19 @@ from keras.models import Sequential
 from keras.layers import Input, Dense, Dropout
 from keras.callbacks import EarlyStopping
 from keras.utils import to_categorical
+from keras import models
+
+
+class ContactNet:
+
+    def __init__(self, train: bool):
+        self.train = train
+
+    def load_pretrained_model(self):
+        return models.load_model('path/to/model/model.h5')
+    
+    def save_model(self, mdl):
+        mdl.save('path/to/mdl')
+    
+    def train(self):
+        pass
