@@ -4,12 +4,12 @@ Authors: Tanner Graves, Marco Uderzo, Nour Alhousseini, Hazeezat Adebimpe Adebay
 
 ## Repository Overview and Files
 
-The repository is organized as follows (only relevant files and folders mentioned):
+The repository is organized as follows (only relevant files and folders are mentioned):
 
 ```
 ↳ data: folder containing all data.
         ↳ features_ring: folder containing all of the training data in .tsv format.
-                        🗎 *.tsv
+        ↳ output: folder containing the .tsv files outputted by calc-features.py
 
         🗎 atchley.tsv: utility file to compute features.
         🗎 ramachandran.dat: utility file to compute features.
@@ -46,23 +46,29 @@ If you find python3 is not able to find the libraries, install them using the fo
 
 ## Running the Software
 
-The software allows both out-of-the-box inference by loading the trained model or complete retraining of the model.
+The software allows:
+- out-of-the-box inference by loading the trained model.
+- complete retraining of the model.
 
 ### Inference Mode
 
-- Require: pdb_id
+- _Requires_: PDB code of target protein (referred below as `your_pdb_id`)
  
 To run the software as default, run the following command in your terminal, using arguments:
 
 
-`python3 contact_net.py --inference --pdb_id`
+`python3 contact_net.py --inference --pdb your_pdb_id`
 
-TODO: Explain the .csv output
+TODO: Explain the .csv output 
 
 ### Training Mode
 
 To train the model from scratch, run the following command:
 
 `python3 contact_net.py --train`
+
+Note that training is allowed with fixed hyperparameters. (Do we want to also allow full customization of hyperparams through arguments or a json config?)
+
+
 
 
