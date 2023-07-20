@@ -21,11 +21,11 @@ def parse_arguments():
 
 
 
-def perform_inference(model, input_pdb): # this should load the model and perform inference given a pdb file
+def perform_inference(model, input_pdb):
     
 
     pdb_list = PDBList()
-    pdb_list.retrieve_pdb_file(input_pdb, pdir=".")
+    pdb_list.retrieve_pdb_file(input_pdb, pdir="/data/output/")
     logging.info(f'Downloaded PDB: {input_pdb}')
     
     os.system(f"python3 calc_features.py {input_pdb}.cif -out_dir data/output/") 
@@ -39,7 +39,7 @@ def perform_inference(model, input_pdb): # this should load the model and perfor
     minMax.fit(X)
     X_scaled = minMax.transform(X)
 
-    print(X_scaled)
+    #print(X_scaled)
 
 
     y_pred = model.predict(X_scaled)
@@ -72,14 +72,14 @@ def main():
     args = parse_arguments()
 
     input_pdb = args.pdb
-    perform_inference = args.inference
-    perform_training = args.train
+    inference_mode = args.inference
+    training_mode = args.train
 
 
-    contact_net_model = ContactNet(perform_training) # perform_training: bool
+    contact_net_model = ContactNet(training_mode) # training_mode: bool
 
 
-    if perform_inference:
+    if inference_mode:
         if input_pdb == None:
             logging.warning("No PDB_id specified!")
             return
@@ -87,7 +87,7 @@ def main():
         logging.info("Performing inference on PDB:", input_pdb)
         perform_inference(contact_net_model, input_pdb)
         
-    elif perform_training:
+    elif training_mode:
         logging.info("Performing re-training of ContactNet")
         contact_net_model.train_model()
        
