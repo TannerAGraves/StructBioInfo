@@ -25,12 +25,17 @@ def perform_inference(model, input_pdb):
     
 
     pdb_list = PDBList()
-    pdb_list.retrieve_pdb_file(input_pdb, pdir="/data/output/")
-    logging.info(f'Downloaded PDB: {input_pdb}')
+    pdb_list.retrieve_pdb_file(input_pdb, pdir="data/output/")
     
-    os.system(f"python3 calc_features.py {input_pdb}.cif -out_dir data/output/") 
+    os.system(f"python3 calc_features.py data/output/{input_pdb}.cif -out_dir data/output/") 
 
-    df = pd.read_csv("data/output/" + input_pdb + ".tsv", sep='\t')
+    try:
+        df = pd.read_csv("data/output/" + input_pdb + ".tsv", sep='\t')
+        logging.info(f"Successfully loaded {input_pdb}.tsv")
+    except FileNotFoundError:
+        logging.ERROR(f'File {input_pdb}.tsv does not exist, exiting.')
+        exit()
+
 
     X = df[['s_up', 's_down', 's_phi', 's_psi', 's_a1', 's_a2', 's_a3', 's_a4', 's_a5', 't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']]
     X = X.apply(lambda x: x.fillna(x.mean()) if x.dtype.kind in 'biufc' else x)
@@ -39,9 +44,7 @@ def perform_inference(model, input_pdb):
     minMax.fit(X)
     X_scaled = minMax.transform(X)
 
-    #print(X_scaled)
-
-
+    logging.info("Predicting contacts...")
     y_pred = model.predict(X_scaled)
 
     X_scaled = pd.DataFrame(X_scaled)
@@ -59,7 +62,8 @@ def perform_inference(model, input_pdb):
         out_data = out_data.rename(columns={i: features[i]})
 
 
-    out_data.to_csv(f"{input_pdb}_contactnet_pred.csv") 
+    out_data.to_csv(f"data/output/{input_pdb}_pred.csv") 
+    logging.info(f"Generated prediction file {input_pdb}_pred.csv in data/output/ folder.")
 
 
 
@@ -67,7 +71,8 @@ def perform_inference(model, input_pdb):
 
 def main():
 
-    logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.WARNING)
+    
+    logging.basicConfig(format='[ContactNet]: %(message)s', level=logging.INFO)
 
     args = parse_arguments()
 
@@ -76,20 +81,23 @@ def main():
     training_mode = args.train
 
 
-    contact_net_model = ContactNet(training_mode) # training_mode: bool
-
+    contactnet = ContactNet(training_mode) # training_mode: bool
 
     if inference_mode:
         if input_pdb == None:
             logging.warning("No PDB_id specified!")
             return
         
-        logging.info("Performing inference on PDB:", input_pdb)
-        perform_inference(contact_net_model, input_pdb)
+        logging.info("Loading Pretrained model...")
+        cn_model = contactnet.load_pretrained_model()
+        logging.info(f"Processing PDB: {input_pdb}")
+        perform_inference(cn_model, input_pdb)
         
     elif training_mode:
-        logging.info("Performing re-training of ContactNet")
-        contact_net_model.train_model()
+        logging.info("Performing Training of ContactNet")
+        trained_model, hist = contactnet.train_model()
+        logging.info("Saving model to /model folder.")
+        contactnet.save_model(trained_model)
        
     else:
         logging.warning("No action specified. Use either --inference or --train.")
