@@ -70,6 +70,8 @@ The software will download the pdb in .mmCIF format, compute its features using 
 
 Once finished, the DataFrame containing the protein's features will be merged with the one containing the probability distribution of each contact being of a certain type, giving more information about the confidence of the prediction. The last column, called "Predicted Interaction" will be also created and merged to the final DataFrame, by taking the *argmax* of the probability distribution.
 
+The software will finally export the final `pdbid_pred.csv` file in the `data/output/` folder. 
+
 ### Training Mode
 
 To train the model from scratch, run the following command:
