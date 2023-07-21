@@ -38,6 +38,10 @@ Before running the software, make sure all the following dependent python librar
 - `keras`
 - `tensorflow`
 
+For visualization after training are also required:
+- `matplotlib`
+- `seaborn`
+
 To install all, run: `pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow` 
 
 If you find python3 is not able to find the libraries, install them using the following command: `python3 -m pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow`
@@ -56,18 +60,23 @@ The software allows:
  
 To run the software as default, run the following command in your terminal, using arguments:
 
-
 `python3 contact_net.py --inference --pdb your_pdb_id`
 
-TODO: Explain the .csv output 
+*Usage Example*: run `python3 contact_net.py --inference --pdb 1a3n`.
+
+Note that all generated files can be found in the `data/output/` folder. 
+
+The software will download the pdb in .mmCIF format, compute its features using the `calc_features.py` script and import the corresponding generated `.tsv` file. In case the `.tsv` file is not found, the software will notify this and terminate its execution. Otherwise, the software will preprocess the data and run it through the pretrained model to predict the contacts.
+
+Once finished, the DataFrame containing the protein's features will be merged with the one containing the probability distribution of each contact being of a certain type, giving more information about the confidence of the prediction. The last column, called "Predicted Interaction" will be also created and merged to the final DataFrame, by taking the *argmax* of the probability distribution.
+
+The software will finally export the final `pdbid_pred.csv` file in the `data/output/` folder. 
 
 ### Training Mode
 
 To train the model from scratch, run the following command:
 
 `python3 contact_net.py --train`
-
-Note that training is allowed with fixed hyperparameters. (Do we want to also allow full customization of hyperparams through arguments or a json config?)
 
 
 
