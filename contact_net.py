@@ -61,9 +61,15 @@ def perform_inference(model, input_pdb):
     for i in range(length):
         out_data = out_data.rename(columns={i: features[i]})
 
-    interaction_cols = out_data.iloc[:, -6:]
-    argmax_name = interaction_cols.idxmax(axis=1)
-    out_data['Predicted Interaction'] = argmax_name
+
+    #############################################################
+    # Only if you want an additional Predicted Interaction Column
+
+    #interaction_cols = out_data.iloc[:, -6:]
+    #argmax_name = interaction_cols.idxmax(axis=1)
+    #out_data['Predicted Interaction'] = argmax_name
+
+    ############################################################
 
     out_data.to_csv(f"data/output/{input_pdb}_pred.csv") 
     logging.info(f"Generated prediction file {input_pdb}_pred.csv in data/output/ folder.")
@@ -74,7 +80,7 @@ def perform_inference(model, input_pdb):
 
 def main():
 
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' # don't log TensorFlow infos
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' # don't log TensorFlow's unnecessary infos
     logging.basicConfig(format='[ContactNet]: %(message)s', level=logging.INFO)
 
     args = parse_arguments()
