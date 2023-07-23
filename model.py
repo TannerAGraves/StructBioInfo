@@ -22,7 +22,7 @@ from keras.utils import to_categorical
 
 
 
-class ContactNet: #maybe make this class a singleton pattern
+class ContactNet:
 
     def __init__(self, train_mode: bool):
         self.training_mode = train_mode # if False -> inference
@@ -48,8 +48,10 @@ class ContactNet: #maybe make this class a singleton pattern
         df = df[df.Interaction.notna()]
         contact_dict = {"HBOND": 0, "IONIC": 1, "PICATION": 2, "PIPISTACK": 3, "SSBOND": 4, "VDW": 5}
         y = df['Interaction'].copy() # had to .copy
+
         cat_names = list(y.astype('category').cat.categories)
         y.replace(contact_dict, inplace=True)
+
         X = df[['s_up', 's_down', 's_phi', 's_psi', 's_a1', 's_a2', 's_a3', 's_a4', 's_a5', 't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']]
         X = X.apply(lambda x: x.fillna(x.mean()) if x.dtype.kind in 'biufc' else x)
         
@@ -75,17 +77,15 @@ class ContactNet: #maybe make this class a singleton pattern
 
     def init_model(self, input_dim, num_classes) -> Sequential:
         model = Sequential()
+
         model.add(Input(input_dim))
+
         model.add(Dense(units=128, activation='relu', kernel_initializer="glorot_normal"))
-        #model.add(Dropout(0.5))
         model.add(Dense(units=128, activation='relu', kernel_initializer="glorot_normal"))
-        #model.add(Dropout(0.5))
         model.add(Dense(units=128, activation='relu', kernel_initializer="glorot_normal"))
-        #model.add(Dropout(0.5))
         model.add(Dense(units=128, activation='relu', kernel_initializer="glorot_normal"))
-        #model.add(Dropout(0.5))
         model.add(Dense(units=128, activation='relu', kernel_initializer="glorot_normal"))
-        #model.add(Dropout(0.5))
+
         model.add(Dense(units=num_classes, activation='softmax', kernel_initializer="glorot_normal"))
         
         model.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['AUC'])
