@@ -65,12 +65,9 @@ class ContactNet: #maybe make this class a singleton pattern
     
 
     def balance_data(self, X_train, y_train):
-        logging.info("Applying Undersampling...")
-        undersample = InstanceHardnessThreshold(estimator=AdaBoostClassifier(),sampling_strategy={0:70000,5:80000})
-        X_bal, y_bal = undersample.fit_resample(X_train, y_train)
         logging.info("Applying Oversampling...")
-        oversample = SMOTE(sampling_strategy={1:20000,3:10000,2:20000,4:10000})
-        X_bal, y_bal = oversample.fit_resample(X_bal, y_bal)
+        oversample = SMOTE(sampling_strategy={2:20000,3:10000,4:10000})
+        X_bal, y_bal = oversample.fit_resample(X_train, y_train)
 
         return X_bal, y_bal
     

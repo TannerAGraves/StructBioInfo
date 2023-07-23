@@ -21,7 +21,7 @@ def parse_arguments():
 
 
 
-def perform_inference(model, input_pdb):
+def predict(model, input_pdb):
     
 
     pdb_list = PDBList()
@@ -80,7 +80,7 @@ def perform_inference(model, input_pdb):
 
 def main():
 
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' # don't log TensorFlow's unnecessary infos
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
     logging.basicConfig(format='[ContactNet]: %(message)s', level=logging.INFO)
 
     args = parse_arguments()
@@ -100,7 +100,7 @@ def main():
         logging.info("Loading Pretrained model...")
         cn_model = contactnet.load_pretrained_model()
         logging.info(f"Processing PDB: {input_pdb}")
-        perform_inference(cn_model, input_pdb)
+        predict(cn_model, input_pdb)
         
     elif training_mode:
         logging.info("Performing Training of ContactNet")
