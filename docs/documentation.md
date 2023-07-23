@@ -9,7 +9,7 @@ The repository is organized as follows (only relevant files and folders are ment
 ```
 ↳ data: folder containing all data.
         ↳ features_ring: folder containing all of the training data in .tsv format.
-        ↳ output: folder containing the .tsv files outputted by calc-features.py
+        ↳ output: folder containing the .tsv files outputted by calc-features.py, as well as the output files of ContactNet.
 
         🗎 atchley.tsv: utility file to compute features.
         🗎 ramachandran.dat: utility file to compute features.
@@ -27,9 +27,10 @@ The repository is organized as follows (only relevant files and folders are ment
 
 ## Dependencies
 
-Before running the software, make sure all the following dependent python libraries are installed on your machine:
+It is assumed that `Python 3.x` is already installed.
 
-- `Python 3.x`: assuming it's already installed.
+Before running the software, make sure all the following dependent Python libraries are installed on your machine:
+
 - `biopython`
 - `numpy`
 - `pandas`
@@ -39,19 +40,20 @@ Before running the software, make sure all the following dependent python librar
 - `tensorflow`
 
 For visualization after training are also required:
+
 - `matplotlib`
 - `seaborn`
 
-To install all, run: `pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow` 
+To install all, run: `pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow matplotlib seaborn` 
 
-If you find python3 is not able to find the libraries, install them using the following command: `python3 -m pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow`
+If you find python3 is not able to find the libraries, install them using the following command: `python3 -m pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow matplotlib seaborn`
 
 
 
 ## Running the Software
 
 The software allows:
-- out-of-the-box inference by loading the trained model.
+- out-of-the-box prediction by loading the pretrained model.
 - complete retraining of the model.
 
 ### Inference Mode
@@ -68,9 +70,9 @@ Note that all generated files can be found in the `data/output/` folder.
 
 The software will download the pdb in .mmCIF format, compute its features using the `calc_features.py` script and import the corresponding generated `.tsv` file. In case the `.tsv` file is not found, the software will notify this and terminate its execution. Otherwise, the software will preprocess the data and run it through the pretrained model to predict the contacts.
 
-Once finished, the DataFrame containing the protein's features will be merged with the one containing the probability distribution of each contact being of a certain type, giving more information about the confidence of the prediction. The last column, called "Predicted Interaction" will be also created and merged to the final DataFrame, by taking the *argmax* of the probability distribution.
+Once finished, the DataFrame containing the protein's features will be merged with the one containing the probability distribution of each contact being of a certain type, giving more information about the confidence of the prediction.
 
-The software will finally export the final `pdbid_pred.csv` file in the `data/output/` folder. 
+The software will finally export the final `pdb_id_pred.csv` file in the `data/output/` folder. 
 
 ### Training Mode
 
