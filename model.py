@@ -47,7 +47,7 @@ class ContactNet:
     def preprocess_data(self, df: pd.DataFrame):
         df = df[df.Interaction.notna()]
         contact_dict = {"HBOND": 0, "IONIC": 1, "PICATION": 2, "PIPISTACK": 3, "SSBOND": 4, "VDW": 5}
-        y = df['Interaction'].copy() # had to .copy
+        y = df['Interaction'].copy()
 
         cat_names = list(y.astype('category').cat.categories)
         y.replace(contact_dict, inplace=True)
@@ -55,9 +55,13 @@ class ContactNet:
         X = df[['s_up', 's_down', 's_phi', 's_psi', 's_a1', 's_a2', 's_a3', 's_a4', 's_a5', 't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']]
         X = X.apply(lambda x: x.fillna(x.mean()) if x.dtype.kind in 'biufc' else x)
         
-        # Is it selecting all features? Useless?
+        #############################################################################
+        # All features are selected anyways so Best Subset Selection is not necessary
+
         #feature_sel = SelectFromModel(LogisticRegression(max_iter=100000))
-        #feature_sel.fit(X, y)
+        #X= feature_sel.fit(X, y)
+
+        #############################################################################
 
         minMax = MinMaxScaler()
         minMax.fit(X)
