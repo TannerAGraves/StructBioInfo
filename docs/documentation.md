@@ -56,15 +56,15 @@ The software allows:
 - out-of-the-box prediction by loading the pretrained model.
 - complete retraining of the model.
 
-### Inference Mode
+### Prediction Mode
 
 - _Requires_: PDB code of target protein (referred below as `your_pdb_id`)
  
 To run the software as default, run the following command in your terminal, using arguments:
 
-`python3 contact_net.py --inference --pdb your_pdb_id`
+`python3 contact_net.py --predict --pdb your_pdb_id`
 
-*Usage Example*: run `python3 contact_net.py --inference --pdb 1a3n`.
+*Usage Example*: run `python3 contact_net.py --predict --pdb 1a3n`.
 
 Note that all generated files can be found in the `data/output/` folder. 
 
