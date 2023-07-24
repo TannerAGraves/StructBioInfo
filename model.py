@@ -24,8 +24,8 @@ from keras.utils import to_categorical
 
 class ContactNet:
 
-    def __init__(self, train_mode: bool):
-        self.training_mode = train_mode # if False -> inference
+    def __init__(selfs):
+        logging.info("ContactNet Initializing...")
 
     def load_pretrained_model(self):
         return models.load_model('model/model.keras')
@@ -54,14 +54,7 @@ class ContactNet:
 
         X = df[['s_up', 's_down', 's_phi', 's_psi', 's_a1', 's_a2', 's_a3', 's_a4', 's_a5', 't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']]
         X = X.apply(lambda x: x.fillna(x.mean()) if x.dtype.kind in 'biufc' else x)
-        
-        #############################################################################
-        # All features are selected anyways so Best Subset Selection is not necessary
 
-        #feature_sel = SelectFromModel(LogisticRegression(max_iter=100000))
-        #X= feature_sel.fit(X, y)
-
-        #############################################################################
 
         minMax = MinMaxScaler()
         minMax.fit(X)
@@ -71,7 +64,6 @@ class ContactNet:
     
 
     def balance_data(self, X_train, y_train):
-        logging.info("Applying Oversampling...")
         oversample = SMOTE(sampling_strategy={2:20000,3:10000,4:10000})
         X_bal, y_bal = oversample.fit_resample(X_train, y_train)
 
@@ -112,7 +104,7 @@ class ContactNet:
                     callbacks=[early_stopping])
             hist.append(metrics)
         
-        return hist #model should already be passed by reference so I just return hist
+        return hist
 
 
     def report(self, model, X_test, y_test, num_classes):
@@ -145,6 +137,7 @@ class ContactNet:
 
     def train_model(self, path=''):
         df = self.load_data_ring(path)
+
         X_scaled, y, cat_names = self.preprocess_data(df)
 
         input_dim = X_scaled.shape[1]
@@ -154,21 +147,22 @@ class ContactNet:
         
         kf = StratifiedKFold(n_splits=10, shuffle=True, random_state=100)
 
-
-
         X_train = np.array(X_train)
         y_train = np.array(y_train)
         X_test = np.array(X_test)
         y_test = np.array(y_test)
 
+        logging.info("Applying Oversampling on Training Set...")
         X_bal, y_bal = self.balance_data(X_train, y_train)
 
         y_cat = to_categorical(y_bal, num_classes)
 
         model = self.init_model(input_dim, num_classes)
 
+        print("\n")
         logging.info("Model summary:")
         model.summary()
+        print("\n")
 
         es = EarlyStopping(
                        monitor='loss',
@@ -177,8 +171,10 @@ class ContactNet:
                        min_delta=0.0001
                        )
         
+        logging.info("Starting Training...")
         hist = self.train(model, X_bal, y_bal, y_cat, kf, es)
 
+        logging.info("Report on Test Set:")
         self.report(model, X_test, y_test, num_classes)
 
         return model, hist

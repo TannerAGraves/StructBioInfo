@@ -11,8 +11,8 @@ def parse_arguments():
     parser.add_argument("--pdb", type=str, required=False,
                         help="Specify input PDB code.")
 
-    parser.add_argument("--inference", action="store_true",
-                        help="Perform inference on new PDB.")
+    parser.add_argument("--prediction", action="store_true",
+                        help="Perform prediction on new PDB.")
 
     parser.add_argument("--train", action="store_true",
                         help="Perform training of the model.")
@@ -26,7 +26,7 @@ def predict(model, input_pdb):
 
     pdb_list = PDBList()
     pdb_list.retrieve_pdb_file(input_pdb, pdir="data/output/")
-    
+    logging.info("Calculating features...")
     os.system(f"python3 calc_features.py data/output/{input_pdb}.cif -out_dir data/output/") 
 
     try:
@@ -86,13 +86,13 @@ def main():
     args = parse_arguments()
 
     input_pdb = args.pdb
-    inference_mode = args.inference
+    prediction_mode = args.prediction
     training_mode = args.train
 
 
-    contactnet = ContactNet(training_mode) # training_mode: bool
+    contactnet = ContactNet()
 
-    if inference_mode:
+    if prediction_mode:
         if input_pdb == None:
             logging.warning("No PDB_id specified!")
             return
@@ -103,13 +103,13 @@ def main():
         predict(cn_model, input_pdb)
         
     elif training_mode:
-        logging.info("Performing Training of ContactNet")
+        logging.info("Performing Retraining of ContactNet")
         trained_model, hist = contactnet.train_model()
         logging.info("Saving model to /model folder.")
         contactnet.save_model(trained_model)
        
     else:
-        logging.warning("No action specified. Use either --inference or --train.")
+        logging.warning("No action specified. Use either --predict or --train. When using --train, also specify --pdb your_pdb_id")
         return
 
 
