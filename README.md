@@ -37,6 +37,7 @@ The repository is organized as follows (only relevant files and folders mentione
 ↳ data: folder containing all data.
         ↳ features_ring: folder containing all of the training data in .tsv format.
                         🗎 *.tsv
+        ↳ output: output folder containing all output files of the software.
 
         🗎 atchley.tsv: utility file to compute features.
         🗎 ramachandran.dat: utility file to compute features.
@@ -44,11 +45,14 @@ The repository is organized as follows (only relevant files and folders mentione
 ↳ docs: folder containing the software documentation.
         🗎 documentation.md: software documentation.
 
-↳ model: folder containing the trained model, loaded at inference time.
+↳ model: folder containing the trained model, loaded at prediction time.
         🗎 model.keras: keras model file.
       
 🗎 contact_net.py: main python script. run for inference or training, specifying arguments.
 🗎 model.py: python script containing the untrained model.
 🗎 calc-features.py: python script to compute the proteins features.
+🗎 configuration.json: JSON file containing configuration settings.
+🗎 contacts_classification_keras.ipynb: Jupyter notebook of ContactNet.
+🗎 project_report.pdf: final project report for the Structural Bioinformatics course.
 ```
 
