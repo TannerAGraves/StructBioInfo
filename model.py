@@ -64,7 +64,7 @@ class ContactNet:
     
 
     def balance_data(self, X_train, y_train):
-        oversample = SMOTE(sampling_strategy={2:20000,3:10000,4:10000})
+        oversample = SMOTE(sampling_strategy={1:20000,3:10000,2:20000,4:10000})
         X_bal, y_bal = oversample.fit_resample(X_train, y_train)
 
         return X_bal, y_bal
