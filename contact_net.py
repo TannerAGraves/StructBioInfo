@@ -11,7 +11,7 @@ def parse_arguments():
     parser.add_argument("--pdb", type=str, required=False,
                         help="Specify input PDB code.")
 
-    parser.add_argument("--prediction", action="store_true",
+    parser.add_argument("--predict", action="store_true",
                         help="Perform prediction on new PDB.")
     
     parser.add_argument("--full", action="store_true",
@@ -94,7 +94,7 @@ def main():
     args = parse_arguments()
 
     input_pdb = args.pdb
-    prediction_mode = args.prediction
+    prediction_mode = args.predict
     training_mode = args.train
     full_out = args.full
 
@@ -118,7 +118,7 @@ def main():
         contactnet.save_model(trained_model)
        
     else:
-        logging.warning("No action specified. Use either --predict or --train. When using --train, also specify --pdb your_pdb_id")
+        logging.warning("No action specified. Use either --predict or --train. When using --train, also specify --pdb your_pdb_id.")
         return
 
 
