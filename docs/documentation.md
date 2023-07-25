@@ -52,7 +52,7 @@ To install all, run: `pip install biopython numpy pandas scikit-learn imbalanced
 
 If you find python3 is not able to find the libraries, install them using the following command: `python3 -m pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow matplotlib seaborn`
 
-Additionally, `DSSP` should already be installed.
+Additionally, `DSSP` binary `mkdssp` should be compiled and put into `bin/dssp` folder.
 
 
 
