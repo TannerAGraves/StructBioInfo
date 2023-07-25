@@ -14,8 +14,8 @@ def parse_arguments():
     parser.add_argument("--prediction", action="store_true",
                         help="Perform prediction on new PDB.")
     
-    parser.add_argument("--trim", action="store_true",
-                        help="Generate output csv file only with the features used in training.")
+    parser.add_argument("--full", action="store_true",
+                        help="Generate output csv file with all features. DSSP is required.")
 
     parser.add_argument("--train", action="store_true",
                         help="Perform training of the model.")
@@ -26,7 +26,7 @@ def parse_arguments():
 
 
 
-def predict(model, input_pdb, trim_out):
+def predict(model, input_pdb, full_out):
     
 
     pdb_list = PDBList()
@@ -60,10 +60,10 @@ def predict(model, input_pdb, trim_out):
                 't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']
 
 
-    if trim_out:
-        out_data = pd.concat([X, y_pred], axis=1)
-    else:
+    if full_out:
         out_data = pd.concat([df, y_pred], axis=1)
+    else:
+        out_data = pd.concat([X, y_pred], axis=1)
 
     length = len(features)
     for i in range(length):
@@ -96,7 +96,7 @@ def main():
     input_pdb = args.pdb
     prediction_mode = args.prediction
     training_mode = args.train
-    trim_out = args.trim
+    full_out = args.full
 
 
     contactnet = ContactNet()
@@ -109,7 +109,7 @@ def main():
         logging.info("Loading Pretrained model...")
         cn_model = contactnet.load_pretrained_model()
         logging.info(f"Processing PDB: {input_pdb}")
-        predict(cn_model, input_pdb, trim_out)
+        predict(cn_model, input_pdb, full_out)
         
     elif training_mode:
         logging.info("Performing Retraining of ContactNet")

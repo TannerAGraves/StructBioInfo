@@ -1,5 +1,5 @@
 {
-  "dssp_file": "bin/dssp-2.3.0/mkdssp",
+  "dssp_file": "bin/dssp/mkdssp",
   "rama_file": "data/ramachandran.dat",
   "atchley_file": "data/atchley.tsv",
   "distance_threshold": 3.5,
