@@ -34,6 +34,8 @@ This project aims at predicting the RING classification of a contact based on su
 The repository is organized as follows (only relevant files and folders mentioned):
 
 ```
+↳ bin/dssp: contains mkdssp. Recompiling might be necessary.
+
 ↳ data: folder containing all data.
         ↳ features_ring: folder containing all of the training data in .tsv format.
                         🗎 *.tsv
