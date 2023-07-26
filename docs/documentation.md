@@ -7,6 +7,8 @@ Authors: Tanner Graves, Marco Uderzo, Nour Alhousseini, Hazeezat Adebimpe Adebay
 The repository is organized as follows (only relevant files and folders are mentioned):
 
 ```
+↳ bin/dssp: contains mkdssp. Recompiling might be necessary.
+
 ↳ data: folder containing all data.
         ↳ features_ring: folder containing all of the training data in .tsv format.
                         🗎 *.tsv
@@ -52,7 +54,7 @@ To install all, run: `pip install biopython numpy pandas scikit-learn imbalanced
 
 If you find python3 is not able to find the libraries, install them using the following command: `python3 -m pip install biopython numpy pandas scikit-learn imbalanced-learn keras tensorflow matplotlib seaborn`
 
-Additionally, `DSSP` binary `mkdssp` should be compiled and put into `bin/dssp` folder.
+Additionally, `DSSP` binary `mkdssp`, although already present, might need to be recompiled and put into `bin/dssp` folder.
 
 
 
