@@ -8,13 +8,13 @@ from model import ContactNet
 def parse_arguments():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--pdb", type=str, required=False,
-                        help="Specify input PDB code.")
-
     parser.add_argument("--predict", action="store_true",
                         help="Perform prediction on new PDB.")
     
-    parser.add_argument("--full", action="store_true",
+    parser.add_argument("--pdb", type=str, required=False,
+                    help="Specify input PDB code.")
+    
+    parser.add_argument("--full", action="store_true", required=False,
                         help="Generate output csv file with all features. DSSP is required.")
 
     parser.add_argument("--train", action="store_true",
