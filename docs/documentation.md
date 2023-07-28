@@ -70,12 +70,15 @@ To run the software as default, run the following command in your terminal, usin
 
 `python3 contact_net.py --predict --pdb your_pdb_id`
 
-By default, the software will output the `.csv` file to only contain the subset of features also used for training. 
-If you want the output `.csv` file to contain all the features from `calc_features.py` , add the `--full` argument when running the command. However, make sure `DSSP` is correctly installed, otherwise the output `csv` file will have blank values on `DSSP`-dependent calculated features.
+- By default, the software will output the `.csv` file to only contain the subset of preprocessed features used for inference, as passed to the model. 
+- If you want the output `.csv` file to contain the subset of unpreprocessed features used for inference, use the `--unprocessedfeats` argument.
+- If you want the output `.csv` file to contain all the features from `calc_features.py`, use the `--full` argument when running the command instead. However, make sure `DSSP` is correctly installed, otherwise the output `csv` file will have blank values on `DSSP`-dependent calculated features. 
 
 *Usage Example*: 
 - run `python3 contact_net.py --predict --pdb 5yj5`. This will generate the standard `csv` output prediction file.
-- run `python3 contact_net.py --predict --pdb 5yj5 --full`. This will generate the full-featured `csv` output prediction file.
+- run `python3 contact_net.py --predict --pdb 5yj5 --unprocessedfeats`. This will generate the `csv` output prediction file with unprocessed features.
+- run `python3 contact_net.py --predict --pdb 5yj5 --full`. This will generate the full-unprocessed-featured `csv` output prediction file.
+
 
 Note that all generated files can be found in the `data/output/` folder. 
 

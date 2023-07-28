@@ -9,13 +9,16 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--predict", action="store_true",
-                        help="Perform prediction on new PDB.")
+                        help="Perform prediction on new PDB. Default mode.")
     
     parser.add_argument("--pdb", type=str, required=False,
                     help="Specify input PDB code.")
     
     parser.add_argument("--full", action="store_true", required=False,
                         help="Generate output csv file with all features. DSSP is required.")
+    
+    parser.add_argument("--unprocessedfeats", action="store_true", required=False,
+                    help="Generate output csv file with original, unprocessed model input features.")
 
     parser.add_argument("--train", action="store_true",
                         help="Perform training of the model.")
@@ -26,7 +29,7 @@ def parse_arguments():
 
 
 
-def predict(model, input_pdb, full_out):
+def predict(model, input_pdb, full_out, unprocessedfeats):
     
 
     pdb_list = PDBList()
@@ -43,6 +46,7 @@ def predict(model, input_pdb, full_out):
 
 
     X = df[['s_up', 's_down', 's_phi', 's_psi', 's_a1', 's_a2', 's_a3', 's_a4', 's_a5', 't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']]
+    X_orig=X.copy(deep=True)
     X = X.apply(lambda x: x.fillna(x.mean()) if x.dtype.kind in 'biufc' else x)
     
     minMax = MinMaxScaler()
@@ -56,10 +60,20 @@ def predict(model, input_pdb, full_out):
     y_pred = pd.DataFrame(y_pred)
     y_pred = y_pred.rename(columns={0: "HBOND", 1: "IONIC", 2: "PICATION", 3: "PIPISTACK", 4: "SSBOND", 5: "VDW"})
 
+    features = ['s_up', 's_down', 's_phi', 's_psi', 's_a1', 's_a2', 's_a3', 's_a4', 's_a5',
+            't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']
+
     if full_out:
         out_data = pd.concat([df, y_pred], axis=1)
+    elif unprocessedfeats:
+        out_data = pd.concat([X_orig, y_pred], axis=1)
     else:
-        out_data = pd.concat([X, y_pred], axis=1)
+        out_data = pd.concat([X_scaled, y_pred], axis=1)
+        length = len(features)
+        for i in range(length):
+            out_data = out_data.rename(columns={i: features[i]})
+
+
 
     #############################################################
     # Only if you want an additional Predicted Interaction Column
@@ -88,6 +102,7 @@ def main():
     prediction_mode = args.predict
     training_mode = args.train
     full_out = args.full
+    unprocessedfeats=args.unprocessedfeats
 
 
     contactnet = ContactNet()
@@ -97,10 +112,14 @@ def main():
             logging.warning("No PDB_id specified!")
             return
         
+        if full_out == True and unprocessedfeats == True:
+            logging.warning("Cannot use --unprocessedfeats argument with --full argument. Please use either of the two.")
+            return
+        
         logging.info("Loading Pretrained model...")
         cn_model = contactnet.load_pretrained_model()
         logging.info(f"Processing PDB: {input_pdb}")
-        predict(cn_model, input_pdb, full_out)
+        predict(cn_model, input_pdb, full_out, unprocessedfeats)
         
     elif training_mode:
         logging.info("Performing Retraining of ContactNet")
@@ -109,7 +128,7 @@ def main():
         contactnet.save_model(trained_model)
        
     else:
-        logging.warning("No action specified. Use either --predict or --train. When using --train, also specify --pdb your_pdb_id.")
+        logging.warning("No action specified. Use either --predict or --train. When using --predict, also specify --pdb your_pdb_id.")
         return
 
 
