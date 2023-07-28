@@ -56,19 +56,10 @@ def predict(model, input_pdb, full_out):
     y_pred = pd.DataFrame(y_pred)
     y_pred = y_pred.rename(columns={0: "HBOND", 1: "IONIC", 2: "PICATION", 3: "PIPISTACK", 4: "SSBOND", 5: "VDW"})
 
-    features = ['s_up', 's_down', 's_phi', 's_psi', 's_a1', 's_a2', 's_a3', 's_a4', 's_a5',
-                't_up', 't_down', 't_phi', 't_psi', 't_a1', 't_a2', 't_a3', 't_a4', 't_a5']
-
-
     if full_out:
         out_data = pd.concat([df, y_pred], axis=1)
     else:
         out_data = pd.concat([X, y_pred], axis=1)
-
-    length = len(features)
-    for i in range(length):
-        out_data = out_data.rename(columns={i: features[i]})
-
 
     #############################################################
     # Only if you want an additional Predicted Interaction Column
